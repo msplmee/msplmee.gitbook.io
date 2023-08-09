@@ -10,9 +10,28 @@ description: >-
 ## Basic Knowledge
 
 #### Linux hardening
+
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
+{% endcontent-ref %}
+
 #### Window hardening
+
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
+{% endcontent-ref %}
+
 #### Web pentesting
+
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
+{% endcontent-ref %}
+
 #### Cloud pentesting
+
+{% content-ref url="broken-reference" %}
+[Broken link](broken-reference)
+{% endcontent-ref %}
 
 ## HTB writeups
 
@@ -24,6 +43,6 @@ I'll create detailed writeups about my CVEs and bug bounty experiences, as long 
 
 ## Disclaimer
 
-I'm not claiming to be the best or really good at security. I'm just a girl who loves security and wants to learn a lot.&#x20;
+I'm not claiming to be the best or really good at security. I'm just a girl who loves security and wants to learn a lot.
 
 If I wrote something wrong, please tell me :love\_letter:

@@ -7,7 +7,7 @@
 
 ## 🥵 Linux Hardening
 
-* [ Privilege Escalation](linux-hardening/privilege-escalation.md)
+* [Privilege Escalation](linux-hardening/privilege-escalation.md)
 
 ## 🤬 Window Hardening
 
@@ -26,7 +26,8 @@
 * [Machines](htb-writeups/machines/README.md)
   * [Easy](htb-writeups/machines/easy/README.md)
     * [TwoMillion](htb-writeups/machines/easy/twomillion.md)
-  * [Medium](htb-writeups/machines/medium.md)
+  * [Medium](htb-writeups/machines/medium/README.md)
+    * [Agile](htb-writeups/machines/medium/agile.md)
   * [Hard](htb-writeups/machines/hard.md)
   * [Insane](htb-writeups/machines/insane.md)
 * [Challenges](htb-writeups/challenges.md)
