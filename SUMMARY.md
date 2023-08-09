@@ -24,7 +24,11 @@
 ## 🤯 HTB Writeups
 
 * [Machines](htb-writeups/machines/README.md)
-  * [TwoMillion](htb-writeups/machines/twomillion.md)
+  * [Easy](htb-writeups/machines/easy/README.md)
+    * [TwoMillion](htb-writeups/machines/easy/twomillion.md)
+  * [Medium](htb-writeups/machines/medium.md)
+  * [Hard](htb-writeups/machines/hard.md)
+  * [Insane](htb-writeups/machines/insane.md)
 * [Challenges](htb-writeups/challenges.md)
 * [Fortress](htb-writeups/fortress.md)
 
