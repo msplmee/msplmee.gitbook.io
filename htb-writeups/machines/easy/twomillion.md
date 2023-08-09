@@ -94,7 +94,7 @@ The Invite Code Challenge was back :tada::tada::tada:
 
 ### Invite Code Challenge
 
-There are numerous guides online on how to hack this but let's investigate a bit closer. Taking a look at the page's source code I see the following.
+Taking a look at the page's source code I see the following.
 
 {% code overflow="wrap" %}
 ```javascript
@@ -132,7 +132,7 @@ There are numerous guides online on how to hack this but let's investigate a bit
 ```
 {% endcode %}
 
-The second action appears to happen when the submit button is pressed, and it sends a request to `/api/v1/invite/verify` to check the validity of the provided code. Additionally, a script named `inviteapi.min.js` is being loaded:
+When the form submits, it sends a POST request to `/api/v1/invite/verify` to check the validity of the provided code. Additionally, a script named `inviteapi.min.js` is being loaded:
 
 {% code overflow="wrap" %}
 ```javascript
@@ -201,7 +201,7 @@ The hint says the data is encrypted, and the `encytpe` says it’s ROT13. The we
 In order to generate the invite code, make a POST request to /api/v1/invite/generate
 ```
 
-Let's generate an invite code
+Let's generate an invite code.
 
 ```apacheconf
 msplmee@kali:~$ curl -sX POST http://2million.htb/api/v1/invite/generate | jq       
@@ -215,7 +215,7 @@ msplmee@kali:~$ curl -sX POST http://2million.htb/api/v1/invite/generate | jq
 }
 ```
 
-The result says the format is "encoded". The "code" is all numbers, letters and ends with `=` . That fits base64 encoding nicely.
+The result says the format is "encoded". The "code" is all numbers, letters and ends with `=`. That fits base64 encoding nicely.
 
 ```apacheconf
 msplmee@kali:~$ echo MDVUVkEtRlcyOFctMVlSRVAtQjdTUFY= | base64 -d 
@@ -240,7 +240,7 @@ The Access page allows a user to Download and Regenerate VPN file to be able to 
 
 "Connection Pack" is sent out to `/api/v1/users/vpn/generate` and in return the VPN file and in return the VPN file for current user is downloaded.
 
-I will send on of these requests to Burp Repester and try request to the URL `/api`
+I will send one of these requests to Burp Repeater and try request to the URL `/api`
 
 <figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
