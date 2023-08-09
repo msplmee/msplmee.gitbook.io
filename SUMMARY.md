@@ -23,7 +23,8 @@
 
 ## 🤯 HTB Writeups
 
-* [Machines](htb-writeups/machines.md)
+* [Machines](htb-writeups/machines/README.md)
+  * [TwoMillion](htb-writeups/machines/twomillion.md)
 * [Challenges](htb-writeups/challenges.md)
 * [Fortress](htb-writeups/fortress.md)
 
