@@ -375,7 +375,7 @@ msplmee@kali:~$ pwncat-cs ssh://admin:SuperDuperPass123@2million.htb
 (remote) admin@2million:/home/admin$ id
 uid=1000(admin) gid=1000(admin) groups=1000(admin)
 (remote) admin@2million:/home/admin$ cat user.txt 
-a4da70806ebdc7e1bb42b200a86fd328
+a4d*****************************
 ```
 {% endcode %}
 
@@ -399,7 +399,6 @@ Hey admin,
 I'm know you're working as fast as you can to do the DB migration. While we're partially down, can you also upgrade the OS on our web host? There have been a few serious Linux kernel CVEs already this year. That one in OverlayFS / FUSE looks nasty. We can't get popped by that.
 
 HTB Godfather
-
 ```
 {% endcode %}
 
@@ -482,7 +481,7 @@ That's a root shell. The root flag can be found in `/root/root.txt`
 
 ```apacheconf
 root@2million:~# cat /root/root.txt 
-897712121c278361706091c39b17c260
+897*****************************
 ```
 
 ## Post Root
