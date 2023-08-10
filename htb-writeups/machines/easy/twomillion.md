@@ -2,12 +2,7 @@
 description: >-
   TwoMillion is an Easy difficulty Linux box that was released to celebrate
   reaching 2 million users on HackTheBox
-cover: ../../../.gitbook/assets/graph.png
-coverY: 0
 layout:
-  cover:
-    visible: true
-    size: hero
   title:
     visible: true
   description:
@@ -25,6 +20,8 @@ layout:
 ## Information
 
 <table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/twomillion.png" alt="https://www.hackthebox.com/machines/twomillion"></td></tr><tr><td>Release Date </td><td align="right">7 Jun 2023</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Easy</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Remote Code Execution, Misconfiguration,</p><p> OS Command Injection, Command Execution</p></td></tr><tr><td>Languages</td><td align="right">PHP, JavaScript</td></tr></tbody></table>
+
+<img src="../../../.gitbook/assets/file.excalidraw (1).svg" alt="Solution flow graph" class="gitbook-drawing">
 
 ## Enumeration
 
