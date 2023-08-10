@@ -1,4 +1,2 @@
 # Medium
 
-## Information
-

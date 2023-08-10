@@ -63,7 +63,7 @@ The scan reveals ports 22 (SSH) and 80 (Nginx) open.&#x20;
 
 ### Subdomain Brute Force
 
-I will try to brute force the DNS server named "2million.htb" with ffuf to check if there are any different subdomains. However, it doesn't return any results.
+I try to brute force the DNS server named "2million.htb" with ffuf to check if there are any different subdomains. However, it doesn't return any results.
 
 So let's add this vHost to /etc/hosts file.
 
@@ -335,7 +335,7 @@ The command is successful and I gain command execution. Let's get reverse shell.
 ```
 {% endcode %}
 
-On sending this, I get a shell at my `pwn-cat`
+On sending this, I get a shell at my `pwncat`
 
 {% code overflow="wrap" %}
 ```apacheconf
