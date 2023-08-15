@@ -25,6 +25,7 @@
 
 * [Machines](htb-writeups/machines/README.md)
   * [Easy](htb-writeups/machines/easy/README.md)
+    * [Active](htb-writeups/machines/easy/active.md)
     * [TwoMillion](htb-writeups/machines/easy/twomillion.md)
   * [Medium](htb-writeups/machines/medium/README.md)
     * [Agile](htb-writeups/machines/medium/agile.md)
