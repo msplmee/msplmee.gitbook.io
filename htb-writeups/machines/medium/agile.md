@@ -70,15 +70,15 @@ echo '10.10.11.203 superpass.htb' | sudo tee -a /etc/hosts
 
 ### Website - TCP 80
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 The website has functionality to login.
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 I create an account. Once I log in, it takes me to the `/vault` page. There are two functions "Add a password" and "Export".
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 “Add a password” opens a form with the password already filled in. I finish the remaining parts and save it by clicking the icon.
 

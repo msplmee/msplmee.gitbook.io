@@ -83,7 +83,7 @@ The link labeled `/login` shows a login form. However, since I don't have any cr
 
 When I click on join and then select `Join HTB`, I get redirected to `/invite`. This page asks for an invite code, with a message that says "Feel free to hack your way in :)".&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Invite Code Challenge was back :tada::tada::tada:
 
@@ -221,13 +221,13 @@ msplmee@kali:~$ echo MDVUVkEtRlcyOFctMVlSRVAtQjdTUFY= | base64 -d
 
 That looks like a valid invite code. When I enter it into the form on `/invite`, it redirects me to `/register`. I can sign up here and log in.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Authenticated Enumeration
 
 With an account, I can access to `/home`
 
-<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The only link that really works is the "Access" page `/home/access`
 
