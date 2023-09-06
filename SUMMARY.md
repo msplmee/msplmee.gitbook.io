@@ -36,7 +36,7 @@
 
 ## 🤑 CVE & Bug Bounty
 
-* [Page 5](cve-and-bug-bounty/page-5.md)
+* [CVE-2023-2684](cve-and-bug-bounty/page-5.md)
 
 ## 🥱 Do do
 
