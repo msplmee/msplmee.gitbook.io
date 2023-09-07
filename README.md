@@ -21,7 +21,7 @@ description: >-
 [Broken link](broken-reference)
 {% endcontent-ref %}
 
-#### Web pentesting
+#### Network pentesting
 
 {% content-ref url="broken-reference" %}
 [Broken link](broken-reference)

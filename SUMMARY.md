@@ -14,9 +14,11 @@
 * [Privilege Escalation](window-hardening/page-3.md)
 * [AD Enumeration & Attacks](window-hardening/ad-enumeration-and-attacks.md)
 
-## 🥴 Web Pentesting
+## 🥴 Network Pentesting
 
-* [Page 1](web-pentesting/page-1.md)
+* [File Transfer](network-pentesting/page-1.md)
+* [Buffer Overflow](network-pentesting/buffer-overflow.md)
+* [Tunneling & Port Forwarding](network-pentesting/tunneling-and-port-forwarding.md)
 
 ## 🥶 Clould Pentesting
 
