@@ -11,7 +11,8 @@
 
 ## 🤬 Window Hardening
 
-* [Page 3](window-hardening/page-3.md)
+* [Privilege Escalation](window-hardening/page-3.md)
+* [AD Enumeration & Attacks](window-hardening/ad-enumeration-and-attacks.md)
 
 ## 🥴 Web Pentesting
 
