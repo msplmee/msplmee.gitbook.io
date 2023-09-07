@@ -18,6 +18,7 @@
 
 * [File Transfer](network-pentesting/page-1.md)
 * [Buffer Overflow](network-pentesting/buffer-overflow.md)
+* [Heap Exploitation](network-pentesting/heap-exploitation.md)
 * [Tunneling & Port Forwarding](network-pentesting/tunneling-and-port-forwarding.md)
 
 ## 🥶 Clould Pentesting
