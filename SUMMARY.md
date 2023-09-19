@@ -37,7 +37,6 @@
   * [Insane](htb-writeups/machines/insane/README.md)
     * [Derailed](htb-writeups/machines/insane/derailed.md)
 * [Challenges](htb-writeups/challenges.md)
-* [Fortress](htb-writeups/fortress.md)
 
 ## 🤑 CVE & Bug Bounty
 
