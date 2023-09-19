@@ -34,7 +34,8 @@
   * [Medium](htb-writeups/machines/medium/README.md)
     * [Agile](htb-writeups/machines/medium/agile.md)
   * [Hard](htb-writeups/machines/hard.md)
-  * [Insane](htb-writeups/machines/insane.md)
+  * [Insane](htb-writeups/machines/insane/README.md)
+    * [Derailed](htb-writeups/machines/insane/derailed.md)
 * [Challenges](htb-writeups/challenges.md)
 * [Fortress](htb-writeups/fortress.md)
 

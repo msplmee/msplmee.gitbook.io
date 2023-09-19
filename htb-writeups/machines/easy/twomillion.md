@@ -21,7 +21,7 @@ layout:
 
 <table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/twomillion.png" alt="https://www.hackthebox.com/machines/twomillion"></td></tr><tr><td>Release Date </td><td align="right">7 Jun 2023</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Easy</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Remote Code Execution, Misconfiguration,</p><p> OS Command Injection, Command Execution</p></td></tr><tr><td>Languages</td><td align="right">PHP, JavaScript</td></tr></tbody></table>
 
-<img src="../../../.gitbook/assets/file.excalidraw (1).svg" alt="Solution flow graph" class="gitbook-drawing">
+<img src="../../../.gitbook/assets/file.excalidraw (1) (1).svg" alt="Solution flow graph" class="gitbook-drawing">
 
 ## Enumeration
 
@@ -83,7 +83,7 @@ The link labeled `/login` shows a login form. However, since I don't have any cr
 
 When I click on join and then select `Join HTB`, I get redirected to `/invite`. This page asks for an invite code, with a message that says "Feel free to hack your way in :)".&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Invite Code Challenge was back :tada::tada::tada:
 
@@ -221,17 +221,17 @@ msplmee@kali:~$ echo MDVUVkEtRlcyOFctMVlSRVAtQjdTUFY= | base64 -d
 
 That looks like a valid invite code. When I enter it into the form on `/invite`, it redirects me to `/register`. I can sign up here and log in.
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Authenticated Enumeration
 
 With an account, I can access to `/home`
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The only link that really works is the "Access" page `/home/access`
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Access page allows a user to Download and Regenerate VPN file to be able to access the HTB infrastructure.
 
@@ -239,7 +239,7 @@ The Access page allows a user to Download and Regenerate VPN file to be able to 
 
 I will send one of these requests to Burp Repeater and try request to the URL `/api`
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Let's request `/api/v1` . It returns details of the full API
 
@@ -283,47 +283,47 @@ Let's enumerate Admin API
 
 `/admin/auth`: I'm not an admin
 
-<figure><img src="../../../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 `/admin/vpn/generate`: it returns 401 Unauthorized
 
-<figure><img src="../../../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 `/admin/settings/update`: it doesn't return 401 Unauthorized, but instead the API replies with `Invalid content type`
 
-<figure><img src="../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Get Admin Access
 
 It is often for APIs to use JSON for sending and receiving data, so lets set the `Content-Type` header to `application/json`
 
-<figure><img src="../../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I get new error message; I will add `email` in the body in json
 
-<figure><img src="../../../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I get another error for a missing parameter called `is_admin`. I will add this as well.
 
-<figure><img src="../../../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I verify this again by accessing the `/admin/auth`
 
-<figure><img src="../../../.gitbook/assets/image (12) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Command Injection
 
 Let's check out the `/admin/vpn/generate` URL that I have sufficient permissions.
 
-<figure><img src="../../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I will add my username
 
-<figure><img src="../../../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (14) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 If this VPN is created using the exec or system PHP function and lacks proper filtering - which is likely since it's an administrative-only feature - there's a chance that injecting code into the username field could lead to gaining command execution on the remote system.
 
-<figure><img src="../../../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (15) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The command is successful and I gain command execution. Let's get reverse shell.
 
