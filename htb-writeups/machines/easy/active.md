@@ -9,13 +9,13 @@ description: >-
 
 ## Information
 
-| Name            |                ![](<../../../.gitbook/assets/image (30).png>) |
+| Name            |            ![](<../../../.gitbook/assets/image (30) (1).png>) |
 | --------------- | ------------------------------------------------------------: |
 | OS              |                                                       Windows |
 | Difficulty      |                                                          Easy |
 | Vulnerabilities | Default Credentials, Weak Permissions, Anonymous/Guest Access |
 
-<img src="../../../.gitbook/assets/file.excalidraw (2).svg" alt="" class="gitbook-drawing">
+<img src="../../../.gitbook/assets/file.excalidraw (2) (1).svg" alt="" class="gitbook-drawing">
 
 ## Enumeration
 

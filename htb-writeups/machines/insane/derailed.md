@@ -6,7 +6,7 @@ description: Do you want Wrecked Badges?
 
 ## Information
 
-<table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/image.png" alt=""></td></tr><tr><td>Release Date </td><td align="right">19 Nov 2022</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Insane</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Arbitrary File Read, Remote Code Execution, </p><p>OS Command Injection, Buffer Overflow, </p><p>Cross Site Scripting (XSS)</p></td></tr><tr><td>Languages</td><td align="right">Ruby, Web Assembly, PHP</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/image (1).png" alt=""></td></tr><tr><td>Release Date </td><td align="right">19 Nov 2022</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Insane</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Arbitrary File Read, Remote Code Execution, </p><p>OS Command Injection, Buffer Overflow, </p><p>Cross Site Scripting (XSS)</p></td></tr><tr><td>Languages</td><td align="right">Ruby, Web Assembly, PHP</td></tr></tbody></table>
 
 
 

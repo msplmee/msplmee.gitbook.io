@@ -36,7 +36,9 @@
   * [Hard](htb-writeups/machines/hard.md)
   * [Insane](htb-writeups/machines/insane/README.md)
     * [Derailed](htb-writeups/machines/insane/derailed.md)
-* [Challenges](htb-writeups/challenges.md)
+* [Endgames](htb-writeups/endgames/README.md)
+  * [P.O.O](htb-writeups/endgames/p.o.o.md)
+  * [Xen](htb-writeups/endgames/xen.md)
 
 ## 🤑 CVE & Bug Bounty
 

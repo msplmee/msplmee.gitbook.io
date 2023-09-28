@@ -21,7 +21,7 @@ layout:
 
 <table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/twomillion.png" alt="https://www.hackthebox.com/machines/twomillion"></td></tr><tr><td>Release Date </td><td align="right">7 Jun 2023</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Easy</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Remote Code Execution, Misconfiguration,</p><p> OS Command Injection, Command Execution</p></td></tr><tr><td>Languages</td><td align="right">PHP, JavaScript</td></tr></tbody></table>
 
-<img src="../../../.gitbook/assets/file.excalidraw (1) (1).svg" alt="Solution flow graph" class="gitbook-drawing">
+<img src="../../../.gitbook/assets/file.excalidraw (2).svg" alt="Solution flow graph" class="gitbook-drawing">
 
 ## Enumeration
 
@@ -83,7 +83,7 @@ The link labeled `/login` shows a login form. However, since I don't have any cr
 
 When I click on join and then select `Join HTB`, I get redirected to `/invite`. This page asks for an invite code, with a message that says "Feel free to hack your way in :)".&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The Invite Code Challenge was back :tada::tada::tada:
 
