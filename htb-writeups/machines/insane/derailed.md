@@ -6,7 +6,7 @@ description: Do you want Wrecked Badges?
 
 ## Information
 
-<table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/image (1).png" alt=""></td></tr><tr><td>Release Date </td><td align="right">19 Nov 2022</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Insane</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Arbitrary File Read, Remote Code Execution, </p><p>OS Command Injection, Buffer Overflow, </p><p>Cross Site Scripting (XSS)</p></td></tr><tr><td>Languages</td><td align="right">Ruby, Web Assembly, PHP</td></tr></tbody></table>
+<table data-header-hidden><thead><tr><th width="330">Name</th><th align="right"></th></tr></thead><tbody><tr><td>Name</td><td align="right"><img src="../../../.gitbook/assets/image (1) (1).png" alt=""></td></tr><tr><td>Release Date </td><td align="right">19 Nov 2022</td></tr><tr><td>OS</td><td align="right">Linux</td></tr><tr><td>Difficulty</td><td align="right">Insane</td></tr><tr><td>Vulnerabilities</td><td align="right"><p>Arbitrary File Read, Remote Code Execution, </p><p>OS Command Injection, Buffer Overflow, </p><p>Cross Site Scripting (XSS)</p></td></tr><tr><td>Languages</td><td align="right">Ruby, Web Assembly, PHP</td></tr></tbody></table>
 
 
 
@@ -50,7 +50,7 @@ The scan reveals ports 22 (SSH) and 3000 (HTTP) open.&#x20;
 
 ### Website - TCP 3000
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 I used `feroxbuster` on the website and discovered an interesting page at `/administrator`. I require an admin account to enter this page.
 
@@ -116,17 +116,17 @@ Content-Length: 4774
 
 I also use the `/rails/info/routes` path to display all the application's routes. `Feroxbuster` didn't find it when using the default wordlist because `/rails` results in a 404 error.
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 ## XSS against Admin
 
 I think I need to perform a cross-site scripting (XSS) attack using the "report" form here. I try different XSS payloads, but it doesn't work.
 
-<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 The next thing I can change is my name, but it seems secure. This might lead to a potential Cross-Site Scripting attack. To test my idea, I create a new account with the username `<b>msplmee</b>` and post a new clipnote. Sadly, the code doesn't run.
 
-<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 After checking the JavaScript code, I find that it retrieves notes from the `/raw/:id` endpoint and sends them to the `display()` function using `ccall()`.
 

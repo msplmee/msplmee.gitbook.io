@@ -39,6 +39,7 @@
 * [Endgames](htb-writeups/endgames/README.md)
   * [P.O.O](htb-writeups/endgames/p.o.o.md)
   * [Xen](htb-writeups/endgames/xen.md)
+  * [Hades](htb-writeups/endgames/hades.md)
 
 ## 🤑 CVE & Bug Bounty
 
